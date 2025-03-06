@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=75.8", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "robot_simulation"
+version = "0.0.1"
+description = "A simulated robot navigation project using Pygame"
+readme = "README.md"
+authors = [
+    { name = "JPJSea", email = "emailjessp@gmail.com" }
+]
+license = { text = "MIT" }
+dependencies = [
+    "pygame"
+]
+requires-python = ">=3.7"
+
+[project.urls]
+Homepage = "https://github.com/JPJSea/robot_simulation"
+Repository = "https://github.com/JPJSea/robot_simulation"
+
+[project.scripts]
+robot-sim = "robot_simulation.main:main"
