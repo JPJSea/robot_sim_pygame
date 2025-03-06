@@ -1,0 +1,50 @@
+# Python bytecode files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environment folders (common locations)
+venv/
+env/
+.venv/
+ENV/
+build/
+dist/
+.eggs/
+*.egg-info/
+robo_py/
+
+# IDE/editor folders and files (e.g., for VSCode, PyCharm, etc.)
+.vscode/
+
+# Python test output
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# macOS system files
+.DS_Store
+
+# Windows system files
+Thumbs.db
+
+# PyInstaller
+*.spec
+
+# Pyre type checker
+.pyre/
+
+# coverage.py, pytest cache
+.coverage
+*.hypothesis/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+
+# VSCode settings and temp files
+.vscode/
