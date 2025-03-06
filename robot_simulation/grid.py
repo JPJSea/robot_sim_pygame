@@ -31,6 +31,7 @@ class Grid:
         if 0 <= x < self.width and 0 <= y < self.height:
             self.grid[y][x] = 1
 
+
     def draw(self, screen):
         """Draw the grid with obstacles on the pygame window."""
         for row in range(self.height):
@@ -40,6 +41,11 @@ class Grid:
                 pygame.draw.rect(screen, color, rect)
                 pygame.draw.rect(screen, (0, 0, 0), rect, 1)  # Border for each cell
 
+
     def is_empty(self, x, y):
-        """Checks if a cell at position (x, y) is empty (no obstacle)."""
+        """Checks if a cell at position (x, y) is empty (no obstacle).
+        Returns False for out-of-bounds or obstacle coordinates.
+        """
+        if not (0 <= x < self.width and 0 <= y < self.height):
+            return False
         return self.grid[y][x] == 0
