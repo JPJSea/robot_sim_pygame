@@ -1,13 +1,13 @@
+from typing import Optional
 import pygame
-from pygame import Surface
-
-from robot_simulation.config import Config
 from robot_simulation.robot import Robot
-from robot_simulation.grid import Grid
+from robot_simulation.mode import Mode
 
-def handle_events(robot: Robot) -> bool:
-    """Handle quit event and movement keys."""
-
+def handle_events(robot: Robot, mode: Mode, button_rect: pygame.Rect) -> Mode:
+    """Handle quit event, movement keys, and UI button clicks.
+    
+    Returns the updated mode, or Mode.QUIT if a quit event is detected.
+    """
     key_to_direction = {
         pygame.K_UP: "up",
         pygame.K_DOWN: "down",
@@ -17,17 +17,16 @@ def handle_events(robot: Robot) -> bool:
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            return False
+            return Mode.QUIT
         elif event.type == pygame.KEYDOWN:
-            direction = key_to_direction.get(event.key)
-            if direction:
-                robot.move(direction)
+            if mode == Mode.MANUAL:
+                direction = key_to_direction.get(event.key)
+                if direction:
+                    robot.move(direction)
+            if event.key == pygame.K_t:
+                mode = Mode.AUTONOMOUS if mode == Mode.MANUAL else Mode.MANUAL
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            if button_rect.collidepoint(event.pos):
+                mode = Mode.AUTONOMOUS if mode == Mode.MANUAL else Mode.MANUAL
 
-    return True
-
-def render_screen(screen: Surface, grid: Grid, robot: Robot) -> None:
-    """Render the grid and the robot on the screen."""
-    screen.fill(Config.WHITE)
-    grid.draw(screen)
-    robot.draw(screen)
-    pygame.display.flip()
+    return mode

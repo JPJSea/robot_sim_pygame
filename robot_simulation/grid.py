@@ -37,7 +37,7 @@ class Grid:
         for row in range(self.height):
             for col in range(self.width):
                 rect = pygame.Rect(col * Config.CELL_SIZE, row * Config.CELL_SIZE, Config.CELL_SIZE, Config.CELL_SIZE)
-                color = Config.BLACK if self.grid[row][col] == 1 else Config.WHITE  # Obstacles are black
+                color = Config.BLUE if self.grid[row][col] == 1 else Config.CREAM
                 pygame.draw.rect(screen, color, rect)
                 pygame.draw.rect(screen, (0, 0, 0), rect, 1)  # Border for each cell
 
