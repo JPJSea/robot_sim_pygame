@@ -53,4 +53,13 @@ def handle_events(
                 mode = Mode.AUTONOMOUS if mode == Mode.MANUAL else Mode.MANUAL
                 if mode == Mode.MANUAL:
                     grid.clear_goal()
+
+            elif event.ui_element == game_ui.reset_button:
+                # Reset obstacles, robot pos and set to Manual
+                grid.grid = [[0] * grid.width for _ in range(grid.height)]
+                mode = Mode.MANUAL
+                grid.add_obstacles_randomly(15)
+                grid.clear_goal()
+                robot.x, robot.y = robot.random_position()
+                robot.path.clear()
     return mode

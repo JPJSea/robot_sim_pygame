@@ -28,12 +28,22 @@ class GameUI:
         self.toggle_button = pygame_gui.elements.UIButton(
             relative_rect=pygame.Rect(
                 (self.grid_width + padding, self.screen_height -
-                 Config.BUTTON_HEIGHT - padding),
+                 Config.BUTTON_HEIGHT* 2 - padding*2),
                 (Config.BUTTON_WIDTH, Config.BUTTON_HEIGHT)
             ),
             text="Auto",
             manager=self.manager,
             container=None
+        )
+
+        # New reset button below the toggle button
+        self.reset_button = pygame_gui.elements.UIButton(
+            relative_rect=pygame.Rect(
+                (self.grid_width + padding, self.screen_height - (Config.BUTTON_HEIGHT + padding)),
+                (Config.BUTTON_WIDTH, Config.BUTTON_HEIGHT)
+            ),
+            text="Reset",
+            manager=self.manager
         )
 
     def update_instructions(self, mode: Mode) -> None:
