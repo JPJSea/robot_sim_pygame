@@ -1,18 +1,18 @@
+import random
 import pygame
 import pygame.gfxdraw
-import pygame_gui  # Import pygame_gui for UI handling
+import pygame_gui
 
 from .config import Config
 from .robot import Robot
 from .grid import Grid
-from robot_simulation.ui import render_screen, GameUI, draw_toggle_button
+from robot_simulation.ui import render_screen, GameUI
 from robot_simulation.utils import handle_events
 from robot_simulation.mode import Mode
 
 
-def initialize_game():
-    """Initialize the game environment, create grid and robot."""
-    # Initialize grid and place obstacles
+def initialise_game():
+    """Initialise the game environment, create grid and robot."""
     grid = Grid(Config.GRID_WIDTH, Config.GRID_HEIGHT)
     grid.add_obstacles_randomly(15)
 
@@ -25,28 +25,37 @@ def main():
     pygame.init()
 
     screen_width = Config.GRID_WIDTH * Config.CELL_SIZE + Config.BUTTON_WIDTH + 40
-    screen_height = Config.GRID_HEIGHT * Config.CELL_SIZE  # Height based on grid
+    screen_height = Config.GRID_HEIGHT * Config.CELL_SIZE
     screen = pygame.display.set_mode((screen_width, screen_height))
     pygame.display.set_caption("Simulated Robot Navigation")
 
-    # Create the UI manager
     manager = pygame_gui.UIManager((screen_width, screen_height))
 
-    grid, robot = initialize_game()
+    grid, robot = initialise_game()
     mode = Mode.MANUAL
 
+    grid_width = Config.GRID_WIDTH * Config.CELL_SIZE
+    game_ui = GameUI((screen_width, screen_height), grid_width, manager)
+
     clock = pygame.time.Clock()
-
     while mode != Mode.QUIT:
-        time_delta = clock.tick(60) / 1000.0  # 60 FPS
+        time_delta = clock.tick(60) / 1000.0
 
-        button_rect = render_screen(screen, grid, robot, mode, manager)
-        mode = handle_events(robot, mode, button_rect, grid, manager)
+        mode = handle_events(robot, mode, grid, manager, game_ui)
 
-        # Update the UI manager (it will update all UI widgets)
+        # Update persistent UI elements.
+        game_ui.update_instructions(mode)
+        game_ui.update_toggle_button(mode)
+
+        render_screen(screen, grid, robot, mode, manager)
+        
         manager.update(time_delta)
         manager.draw_ui(screen)
-
+        
+        if mode == Mode.AUTONOMOUS:
+            random_direction = random.choice(["up", "down", "left", "right"])
+            robot.move(random_direction)
+            
         pygame.display.flip()
 
     pygame.quit()
