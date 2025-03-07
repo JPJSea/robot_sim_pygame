@@ -40,6 +40,7 @@ def main():
     clock = pygame.time.Clock()
     while mode != Mode.QUIT:
         time_delta = clock.tick(60) / 1000.0
+        current_time = pygame.time.get_ticks()
 
         mode = handle_events(robot, mode, grid, manager, game_ui)
 
@@ -53,8 +54,7 @@ def main():
         manager.draw_ui(screen)
         
         if mode == Mode.AUTONOMOUS:
-            random_direction = random.choice(["up", "down", "left", "right"])
-            robot.move(random_direction)
+            robot.move_along_path(current_time)
             
         pygame.display.flip()
 

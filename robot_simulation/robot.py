@@ -20,6 +20,15 @@ class Robot:
         min_rgb = 15
         max_rgb = 205
         self.color = (random.randint(min_rgb, max_rgb), random.randint(min_rgb, max_rgb), random.randint(min_rgb, max_rgb))
+        self.path = []
+        grid.robot = self
+        self.last_move_time = 0
+
+    def move_along_path(self, current_time: int):
+        if self.path and current_time - self.last_move_time >= Config.ROBOT_MOVE_INTERVAL:
+            next_direction = self.path.pop(0)
+            self.move(next_direction)
+            self.last_move_time = current_time
 
     @classmethod
     def get_directions(cls):

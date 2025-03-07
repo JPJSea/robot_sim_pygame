@@ -17,7 +17,8 @@ class GameUI:
         padding = Config.BUTTON_PADDING
 
         self.instruction_box = pygame_gui.elements.UITextBox(
-            relative_rect=pygame.Rect((self.grid_width + 20, 20), (self.button_column_width - 40, 100)),
+            relative_rect=pygame.Rect(
+                (self.grid_width + 20, 20), (self.button_column_width - 40, 100)),
             manager=self.manager,
             html_text="",
             container=None,
@@ -26,7 +27,8 @@ class GameUI:
 
         self.toggle_button = pygame_gui.elements.UIButton(
             relative_rect=pygame.Rect(
-                (self.grid_width + padding, self.screen_height - Config.BUTTON_HEIGHT - padding),
+                (self.grid_width + padding, self.screen_height -
+                 Config.BUTTON_HEIGHT - padding),
                 (Config.BUTTON_WIDTH, Config.BUTTON_HEIGHT)
             ),
             text="Auto",
@@ -54,7 +56,6 @@ class GameUI:
         self.manager.draw_ui(screen)
 
 
-
 def render_screen(screen: Surface, grid: Grid, robot: Robot, mode: Mode, manager: pygame_gui.UIManager) -> None:
     screen_width, screen_height = screen.get_size()
     screen.fill((255, 255, 255))
@@ -64,7 +65,8 @@ def render_screen(screen: Surface, grid: Grid, robot: Robot, mode: Mode, manager
 
     # Draw the button column background.
     grid_width = Config.GRID_WIDTH * Config.CELL_SIZE
-    button_area = pygame.Rect(grid_width, 0, screen_width - grid_width, screen_height)
+    button_area = pygame.Rect(
+        grid_width, 0, screen_width - grid_width, screen_height)
     pygame.draw.rect(screen, Config.GREEN, button_area)
 
     robot.draw(screen)

@@ -3,6 +3,8 @@ class Config:
     CELL_SIZE = 40  # Each grid cell will be 40x40 pixels
     GRID_WIDTH = 10  # Number of columns
     GRID_HEIGHT = 10  # Number of rows
+    
+    ROBOT_MOVE_INTERVAL = 300
 
     BUTTON_WIDTH = 150
     BUTTON_HEIGHT = 50

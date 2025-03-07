@@ -1,6 +1,8 @@
 import pygame
 import random
 from .config import Config
+from typing import Optional
+from .robot import Robot
 
 class Goal:
     def __init__(self, x: int, y: int) -> None:
@@ -21,7 +23,8 @@ class Grid:
         self.width: int = width
         self.height: int = height
         self.grid: list[list[int]] = self._initialize_grid()
-        self.goal: Goal = Goal(-1, -1)
+        self.robot: Optional["Robot"] = None
+        self.goal: Goal = Goal(-1, -1)  # default invalid position
 
     def draw_goal(self, screen: pygame.Surface) -> None:
         """Draw the goal on the grid."""

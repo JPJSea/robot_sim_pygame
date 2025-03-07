@@ -5,6 +5,8 @@ from .mode import Mode
 from .config import Config
 from .grid import Grid
 from .ui import GameUI
+from .path_planner import PathPlanner
+
 
 def handle_events(
     robot: Robot,
@@ -42,6 +44,10 @@ def handle_events(
                 grid_y = mouse_y // Config.CELL_SIZE
                 if grid.is_empty(grid_x, grid_y):
                     grid.set_goal(grid_x, grid_y)
+
+                    start = (robot.x, robot.y)
+                    goal = (grid_x, grid_y)
+                    robot.path = PathPlanner.bfs(grid, start, goal)
         elif event.type == pygame_gui.UI_BUTTON_PRESSED:
             if event.ui_element == game_ui.toggle_button:
                 mode = Mode.AUTONOMOUS if mode == Mode.MANUAL else Mode.MANUAL
